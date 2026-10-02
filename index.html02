@@ -1,0 +1,788 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Solicitação Serviços Extras – A&B</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#e9e9e9;font-family:Arial,Helvetica,sans-serif;color:#222}
+.sheet{width:min(210mm,100%);min-height:297mm;margin:12px auto;background:#fff;padding:10mm 9mm}
+.top{display:grid;grid-template-columns:30mm 1fr;gap:4mm;align-items:center}
+.enotel-logo{width:36mm;height:36mm;display:flex;align-items:center;justify-content:flex-start;overflow:hidden;border-radius:50%;color:#173f6f}
+.enotel-symbol-real{height:36mm;width:auto;max-width:none;display:block;flex:none;object-fit:contain;object-position:left center}
+.title{border:1px solid #333;text-align:center;font-weight:bold}
+.title .main{font-size:16px;padding:5px;border-bottom:1px solid #555}
+.title .sub{font-size:14px;padding:5px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8mm;margin-top:12mm}
+.field{font-size:13px;font-weight:bold;display:flex;gap:5px;align-items:end}
+.field span{white-space:nowrap}
+.line{border-bottom:1px solid #222;flex:1;min-height:20px;padding:2px 4px;font-weight:normal}
+.inline{display:grid;grid-template-columns:1fr 1fr;gap:8mm}
+.table{border:1px solid #333;margin-top:7mm}
+.trow{display:grid;grid-template-columns:1fr 2fr;border-top:1px solid #333}
+.trow:first-child{border-top:0}
+.cell{padding:5px;border-left:1px solid #333;min-height:27px}
+.cell:first-child{border-left:0}
+.head{font-weight:bold}
+.section-title{text-align:center;font-weight:bold;padding:5px;border-bottom:1px solid #333}
+.checkgrid{display:grid;grid-template-columns:1fr 1fr 1fr}
+.check{border-right:1px solid #333;border-bottom:1px solid #333;padding:6px;min-height:31px}
+.check:nth-child(3n){border-right:0}
+.check input{width:18px;height:18px;vertical-align:middle;margin-right:6px}
+.obs{border:1px solid #333;margin-top:8mm}
+.obs-title{text-align:center;font-weight:bold;padding:5px;border-bottom:1px solid #333}
+textarea{width:100%;min-height:85px;border:0;resize:none;padding:8px;font-size:15px;line-height:25px;background:repeating-linear-gradient(to bottom,#fff 0,#fff 24px,#999 25px)}
+.sig{border:1px solid #333;margin-top:7mm;padding:7px}
+.sig-title{font-weight:bold;text-align:center}
+.sig-name{display:flex;gap:6px;align-items:end;margin-top:7px;font-size:13px;font-weight:bold}
+.sig-name input{border:0;border-bottom:1px solid #222;flex:1;font-size:15px;padding:4px}
+.sigbox{border:1px solid #222;border-radius:4px;margin-top:7px;overflow:hidden;touch-action:none}
+canvas{width:100%;height:125px;display:block;background:#fff;touch-action:none}
+.buttons{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px}
+button{border:0;border-radius:6px;padding:10px 14px;font-weight:bold}
+.primary{background:#222;color:#fff}
+.secondary{background:#ddd}
+.note{font-size:11px;font-weight:bold;margin-top:7mm;line-height:1.55}
+.status{font-size:12px;margin-top:5px;padding:6px;background:#eaf5ea;display:none}
+.print-sign{display:none}
+.print-sign img{max-width:100%;height:35mm;object-fit:contain;display:block;margin:auto}
+
+@media(max-width:700px){
+ .sheet{width:100%;padding:14px;margin:0}
+ .top{grid-template-columns:80px 1fr}
+ .enotel-logo{width:92px;height:92px}
+ .enotel-symbol-real{height:92px}
+ .title .main{font-size:13px}
+ .title .sub{font-size:12px}
+ .row,.inline{grid-template-columns:1fr;gap:8px;margin-top:8px}
+ .checkgrid{grid-template-columns:1fr}
+ .check{border-right:0}
+}
+
+@page{size:A4 portrait;margin:0}
+
+@media print{
+ body{background:#fff;margin:0;font-size:9.5px}
+ .sheet{width:210mm;height:297mm;min-height:297mm;margin:0;padding:6mm 7mm;overflow:hidden}
+ .no-print{display:none!important}
+ .top{grid-template-columns:22mm 1fr;gap:3mm}
+ .enotel-logo{width:28mm;height:28mm}
+ .enotel-symbol-real{height:28mm}
+ .title .main{font-size:12px;padding:3px}
+ .title .sub{font-size:11px;padding:3px}
+ .row{gap:5mm;margin-top:4mm}
+ .field{font-size:9.5px;gap:3px}
+ .line{min-height:14px;padding:1px 2px}
+ .field input,.field select{font-size:10px}
+ .table{margin-top:3mm}
+ .section-title{padding:3px;font-size:9.5px}
+ .cell{padding:3px;min-height:20px;font-size:9px}
+ .check{padding:3px;min-height:21px;font-size:9px}
+ .check input{width:12px;height:12px;margin-right:3px}
+ .obs{margin-top:3.5mm}
+ .obs-title{padding:3px;font-size:9.5px}
+ textarea{min-height:27mm;height:27mm;padding:4px;font-size:10px;line-height:15px}
+ .sig{margin-top:3.5mm;padding:4px}
+ .sig-title{font-size:9.5px}
+ .sig-name{margin-top:3px;font-size:9px}
+ .sig-name input{font-size:10px;padding:2px}
+ .print-sign{display:block;font-size:9px}
+ .sigbox{display:none;border:0}
+ .print-sign img{height:15mm!important;max-width:100%;object-fit:contain;display:block;margin:0 auto}
+ canvas{display:none}
+ .note{font-size:8px;margin-top:3mm;line-height:1.25}
+ .buttons{display:none}
+}
+
+/* Centralização da coluna Quantidade */
+.trow .cell:nth-child(2){text-align:center;}
+.quantidade-head{text-align:center !important;display:flex;align-items:center;justify-content:center;}
+.quantidade-cell{text-align:center !important;display:flex;align-items:center;justify-content:center;}
+#quantidade{text-align:center !important;display:block;margin:0 auto;width:100% !important;}
+</style>
+</head>
+
+<body>
+
+<div class="sheet">
+
+  <div class="top">
+    <div class="enotel-logo" role="img" aria-label="Símbolo oficial Enotel Hotels &amp; Resorts">
+      <img class="enotel-symbol-real"
+           src="https://lirp.cdn-website.com/06da8011/dms3rep/multi/opt/Logo-Enotel_Hotels_Resorts_Cor_horizontal-640w.png"
+           alt="Símbolo oficial Enotel Hotels &amp; Resorts">
+    </div>
+
+    <div class="title">
+      <div class="main">SOLICITAÇÃO SERVIÇOS EXTRAS – A&amp;B</div>
+      <div class="sub">Solicitação: Comemoração</div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div>
+
+      <div class="field">
+        <span>Nome Aniversariante:</span>
+        <div class="line">
+          <input id="aniversariante"
+                 style="border:0;outline:0;width:100%;font-size:15px">
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:7px">
+        <span>Faixa Etária:</span>
+        <div class="line">
+          <input id="faixa"
+                 style="border:0;outline:0;width:100%;font-size:15px">
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:7px">
+        <span>Data da solicitação:</span>
+        <div class="line">
+          <input id="dataSolicitacao"
+                 type="date"
+                 style="border:0;outline:0;width:100%;font-size:15px">
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:7px">
+        <span>Data entrega:</span>
+        <div class="line">
+          <input id="dataEntrega"
+                 type="date"
+                 style="border:0;outline:0;width:100%;font-size:15px">
+        </div>
+      </div>
+
+    </div>
+
+    <div>
+
+      <div class="field">
+        <span>Horário solicitação:</span>
+        <div class="line">
+          <input id="horaSolicitacao"
+                 type="time"
+                 style="border:0;outline:0;width:100%;font-size:15px">
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:7px">
+        <span>Horário de entrega:</span>
+        <div class="line">
+          <input id="horaEntrega"
+                 type="time"
+                 style="border:0;outline:0;width:100%;font-size:15px">
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="table">
+
+    <div class="trow">
+      <div class="cell head" style="text-align:center">UH</div>
+      <div class="cell head quantidade-head">QUANTIDADE</div>
+    </div>
+
+    <div class="trow">
+      <div class="cell">
+        <input id="uh"
+               style="width:100%;border:0;font-size:15px;text-align:center">
+      </div>
+
+      <div class="cell quantidade-cell">
+        <input id="quantidade"
+               type="number"
+               min="1"
+               style="width:100%;border:0;font-size:15px;text-align:center">
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="table">
+
+    <div class="section-title">LOCAL DE ENTREGA</div>
+
+    <div class="checkgrid">
+
+      <label class="check">
+        <input type="radio" name="localcheck" value="Restaurante Papoula">
+        Restaurante Papoula
+      </label>
+
+      <label class="check">
+        <input type="radio" name="localcheck" value="Restaurante Flor de Sal">
+        Restaurante Flor de Sal
+      </label>
+
+      <label class="check">
+        <input type="radio" name="localcheck" value="Restaurante Siri (infantil)">
+        Restaurante Siri (infantil)
+      </label>
+
+      <label class="check">
+        <input type="radio" name="localcheck" value="Rest. Mediterrâneo">
+        Rest. Mediterrâneo
+      </label>
+
+      <label class="check">
+        <input type="radio" name="localcheck" value="Rest. Italiano">
+        Rest. Italiano
+      </label>
+
+      <label class="check">
+        <input type="radio" name="localcheck" value="Rest. Français">
+        Rest. Français
+      </label>
+
+      <label class="check">
+        <input type="radio" name="localcheck" value="Pizzaria Oliva">
+        Pizzaria Oliva
+      </label>
+
+      <label class="check">
+        <input type="radio" name="localcheck" value="Área Vip (Convention)">
+        Área Vip (Convention)
+      </label>
+
+      <label class="check">
+        <input type="radio" name="localcheck" value="XXXXXXXXXXX">
+        XXXXXXXXXXX
+      </label>
+
+    </div>
+  </div>
+
+
+  <div class="table">
+
+    <div class="section-title">TIPOS DE COBERTURA:</div>
+
+    <div class="checkgrid">
+
+      <label class="check">
+        <input type="radio" name="cobertura" value="Chantilly">
+        Chantilly
+      </label>
+
+      <label class="check">
+        <input type="radio" name="cobertura" value="Ganache de Chocolate">
+        Ganache de Chocolate
+      </label>
+
+      <label class="check">
+        <input type="radio" name="cobertura" value="Brigadeiro">
+        Brigadeiro
+      </label>
+
+    </div>
+  </div>
+
+
+  <div class="table">
+
+    <div class="section-title">TIPOS DE RECHEIO:</div>
+
+    <div class="checkgrid">
+
+      <label class="check">
+        <input type="radio" name="recheio" value="Chocolate">
+        Chocolate
+      </label>
+
+      <label class="check">
+        <input type="radio" name="recheio" value="Morango">
+        Morango
+      </label>
+
+      <label class="check">
+        <input type="radio" name="recheio" value="Doce de leite">
+        Doce de leite
+      </label>
+
+      <label class="check">
+        <input type="radio" name="recheio" value="Prestígio">
+        Prestígio
+      </label>
+
+    </div>
+  </div>
+
+
+  <div class="table">
+
+    <div class="section-title">TIPOS DE MASSA:</div>
+
+    <div class="checkgrid">
+
+      <label class="check">
+        <input type="radio" name="massa" value="Pão de ló chocolate">
+        Pão de ló chocolate
+      </label>
+
+      <label class="check">
+        <input type="radio" name="massa" value="Pão de ló branco">
+        Pão de ló branco
+      </label>
+
+    </div>
+  </div>
+
+
+  <div class="obs">
+
+    <div class="obs-title">OBSERVAÇÕES</div>
+
+    <textarea id="observacoes"></textarea>
+
+  </div>
+
+
+  <div class="note">
+    *Entregas de Bolos até as 22 horas<br>
+    **Todos os pedidos deverão ser feitos com 24h de antecedência<br>
+    ***Troca do Local de Entrega somente com 24h de antecedência e sobre consulta
+  </div>
+
+
+  <div class="sig">
+
+    <div class="sig-title">ASSINATURA DO SOLICITANTE</div>
+
+    <div class="sig-name">
+      <span>Nome por extenso:</span>
+      <input id="nomeAssinante">
+    </div>
+
+    <div class="sigbox">
+      <canvas id="pad"></canvas>
+    </div>
+
+    <div class="print-sign">
+      <b>Assinatura:</b>
+      <img id="printSignature" alt="Assinatura manuscrita">
+      <div style="border-bottom:1px solid #222"></div>
+    </div>
+
+    <div class="buttons no-print">
+
+      <button type="button"
+              class="secondary"
+              id="limpar">
+        Limpar assinatura
+      </button>
+
+      <button type="button"
+              class="primary"
+              id="confirmar">
+        Confirmar assinatura
+      </button>
+
+    </div>
+
+    <div id="status" class="status">
+      ✓ Assinatura confirmada.
+    </div>
+
+  </div>
+
+
+  <div class="buttons no-print">
+
+    <button type="button"
+            class="primary"
+            id="salvar">
+      SALVAR REQUISIÇÃO COMPLETA
+    </button>
+
+    <button type="button"
+            class="primary"
+            id="enviarEmail">
+      📧 ENVIAR PARA A&B + BOLOS
+    </button>
+
+    <button type="button"
+            class="primary"
+            id="imprimir">
+      IMPRIMIR / SALVAR EM PDF
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const canvas=document.getElementById('pad');
+const ctx=canvas.getContext('2d');
+
+let drawing=false;
+let hasSig=false;
+
+
+function resize(){
+
+  const r=canvas.getBoundingClientRect();
+  const d=window.devicePixelRatio||1;
+
+  const old=document.createElement('canvas');
+
+  old.width=canvas.width;
+  old.height=canvas.height;
+
+  if(canvas.width&&canvas.height){
+    old.getContext('2d').drawImage(canvas,0,0);
+  }
+
+  canvas.width=Math.max(1,Math.round(r.width*d));
+  canvas.height=Math.max(1,Math.round(r.height*d));
+
+  ctx.setTransform(d,0,0,d,0,0);
+
+  ctx.lineWidth=2.4;
+  ctx.lineCap='round';
+  ctx.lineJoin='round';
+  ctx.strokeStyle='#111';
+
+}
+
+
+resize();
+
+window.addEventListener('resize',resize);
+
+
+function pos(e){
+
+  const r=canvas.getBoundingClientRect();
+
+  return{
+    x:e.clientX-r.left,
+    y:e.clientY-r.top
+  };
+
+}
+
+
+canvas.addEventListener('pointerdown',e=>{
+
+  e.preventDefault();
+
+  drawing=true;
+
+  try{
+    canvas.setPointerCapture(e.pointerId);
+  }catch(_){}
+
+  const p=pos(e);
+
+  ctx.beginPath();
+  ctx.moveTo(p.x,p.y);
+
+});
+
+
+canvas.addEventListener('pointermove',e=>{
+
+  if(!drawing)return;
+
+  e.preventDefault();
+
+  const p=pos(e);
+
+  ctx.lineTo(p.x,p.y);
+  ctx.stroke();
+
+  hasSig=true;
+
+});
+
+
+canvas.addEventListener('pointerup',()=>{
+  drawing=false;
+});
+
+
+canvas.addEventListener('pointercancel',()=>{
+  drawing=false;
+});
+
+
+canvas.addEventListener('pointerleave',()=>{
+  if(drawing)drawing=false;
+});
+
+
+document.getElementById('limpar').addEventListener('click',()=>{
+
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  hasSig=false;
+
+  document.getElementById('status').style.display='none';
+
+  document
+    .getElementById('printSignature')
+    .removeAttribute('src');
+
+});
+
+
+document.getElementById('confirmar').addEventListener('click',()=>{
+
+  if(!hasSig){
+
+    alert('Faça a assinatura primeiro.');
+
+    return;
+
+  }
+
+  document.getElementById('printSignature').src=
+    canvas.toDataURL('image/png');
+
+  document.getElementById('status').style.display='block';
+
+  document
+    .getElementById('status')
+    .scrollIntoView({
+      behavior:'smooth',
+      block:'center'
+    });
+
+});
+
+
+function radio(n){
+
+  const x=document.querySelector(
+    'input[name="'+n+'"]:checked'
+  );
+
+  return x?x.value:'';
+
+}
+
+
+function val(id){
+
+  const el=document.getElementById(id);
+
+  return el?el.value||'':'';
+
+}
+
+
+function dados(){
+
+  return{
+
+    aniversariante:val('aniversariante'),
+
+    faixa:val('faixa'),
+
+    dataSolicitacao:val('dataSolicitacao'),
+
+    dataEntrega:val('dataEntrega'),
+
+    horaSolicitacao:val('horaSolicitacao'),
+
+    horaEntrega:val('horaEntrega'),
+
+    local:radio('localcheck'),
+
+    uh:val('uh'),
+
+    quantidade:val('quantidade'),
+
+    cobertura:radio('cobertura'),
+
+    recheio:radio('recheio'),
+
+    massa:radio('massa'),
+
+    observacoes:val('observacoes'),
+
+    nomeAssinante:val('nomeAssinante'),
+
+    assinatura:hasSig?
+      canvas.toDataURL('image/png'):
+      '',
+
+    registradoEm:new Date().toLocaleString('pt-BR')
+
+  };
+
+}
+
+
+function validar(){
+
+  const d=dados();
+
+  if(!d.nomeAssinante){
+
+    alert('Informe o nome por extenso.');
+
+    return false;
+
+  }
+
+  if(!d.assinatura){
+
+    alert(
+      'Faça e confirme a assinatura antes de continuar.'
+    );
+
+    return false;
+
+  }
+
+  return true;
+
+}
+
+
+function saveData(){
+
+  if(!validar())return false;
+
+  const d=dados();
+
+  try{
+
+    localStorage.setItem(
+      'ultima_solicitacao_bolos',
+      JSON.stringify(d)
+    );
+
+  }catch(err){
+
+    // Alguns navegadores bloqueiam localStorage
+    // para arquivos HTML locais.
+    // A impressão/PDF continua funcionando.
+
+  }
+
+  return true;
+
+}
+
+
+document.getElementById('salvar').addEventListener('click',()=>{
+
+  if(saveData()){
+
+    alert(
+      '✓ Requisição completa confirmada e salva neste dispositivo.'
+    );
+
+  }
+
+});
+
+
+function mensagemEmail(){
+
+  const d=dados();
+
+  return `SOLICITAÇÃO DE SERVIÇOS EXTRAS – A&B\n\n` +
+
+    `Aniversariante: ${d.aniversariante || 'Não informado'}\n` +
+
+    `Faixa etária: ${d.faixa || 'Não informado'}\n` +
+
+    `Data da solicitação: ${d.dataSolicitacao || 'Não informado'}\n` +
+
+    `Data de entrega: ${d.dataEntrega || 'Não informado'}\n` +
+
+    `Horário da solicitação: ${d.horaSolicitacao || 'Não informado'}\n` +
+
+    `Horário de entrega: ${d.horaEntrega || 'Não informado'}\n` +
+
+    `Local: ${d.local || 'Não informado'}\n` +
+
+    `UH: ${d.uh || 'Não informado'}\n` +
+
+    `Quantidade: ${d.quantidade || 'Não informado'}\n` +
+
+    `Local de entrega: ${d.local || 'Não informado'}\n` +
+
+    `Cobertura: ${d.cobertura || 'Não informado'}\n` +
+
+    `Recheio: ${d.recheio || 'Não informado'}\n` +
+
+    `Massa: ${d.massa || 'Não informado'}\n` +
+
+    `Observações: ${d.observacoes || 'Nenhuma'}\n` +
+
+    `Solicitante: ${d.nomeAssinante || 'Não informado'}\n\n` +
+
+    `Assinatura: confirmada no formulário.\n` +
+
+    `Registro: ${d.registradoEm}`;
+
+}
+
+
+document.getElementById('enviarEmail').addEventListener('click',()=>{
+
+  if(!saveData())return;
+
+  const d=dados();
+
+  const assunto=encodeURIComponent(
+    `Solicitação de Bolo - ${d.aniversariante || 'Enotel'}`
+  );
+
+  const corpo=encodeURIComponent(
+    mensagemEmail()
+  );
+
+  const mailto=
+    `mailto:adm.aeb@gmail.com` +
+    `?cc=bolos@enotel.com.br` +
+    `&subject=${assunto}` +
+    `&body=${corpo}`;
+
+  window.location.href=mailto;
+
+});
+
+
+document.getElementById('imprimir').addEventListener('click',()=>{
+
+  if(!saveData())return;
+
+  // Garante que a assinatura esteja pronta
+  // na versão de impressão.
+
+  document.getElementById('printSignature').src=
+    canvas.toDataURL('image/png');
+
+  setTimeout(()=>{
+    window.print();
+  },100);
+
+});
+
+</script>
+
+</body>
+</html>
